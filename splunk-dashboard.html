@@ -25,6 +25,12 @@
       overflow-x: auto;
       font-family: 'Courier New', Courier, monospace;
     }
+    .dashboard-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+    }
   </style>
 </head>
 <body>
@@ -45,6 +51,10 @@
   <main class="container mx-auto px-4 py-20">
     <h1 class="text-4xl font-bold text-white mb-6">Splunk Dashboard for Firewall Analysis</h1>
     <p class="text-gray-300 mb-4">Published: May 24, 2025</p>
+    <!-- Dashboard Image -->
+    <div class="mb-8 text-center">
+      <img src="/assets/splunkdash-screenshot.png" alt="Splunk Dashboard Screenshot" class="dashboard-img mx-auto">
+    </div>
 
     <h2 class="text-2xl font-semibold accent-red mb-4">Project Overview</h2>
     <p class="text-lg text-gray-300 mb-6">
@@ -181,18 +191,18 @@ index=botsv1 sourcetype="fortigate_traffic" src_ip=$ip_token$
     <p class="text-lg text-gray-300 mb-6">
       This Splunk dashboard demonstrates my ability to use SPL for firewall traffic analysis and create actionable visualizations tailored for a SOC environment. By presenting key firewall metrics in a clear and concise manner, the dashboard equips SOC analysts with the insights needed to monitor and respond to potential security threats effectively. This project highlights my technical skills in SIEM tools, data analysis, and security operations, making me a strong candidate for a SOC analyst role.
     </p>
-    <p class="text-lg text-gray-300 mb-6">
-      View the project code and dataset on <a href="https://github.com/yourusername/splunk-project" class="text-red-500 hover-red">GitHub</a>.
-    </p>
+    <!-- <p class="text-lg text-gray-300 mb-6">
+      View the project code and dataset on <a href="https://github.com/achintya-esbee/splunk-project" class="text-red-500 hover-red">GitHub</a>.
+    </p>-->
   </main>
 
-  <!-- Footer -->
+ <!-- Footer -->
   <footer class="bg-gray-900 py-6 text-center">
-    <p class="text-gray-400">© 2025 YourName. All rights reserved.</p>
+    <p class="text-gray-400">© 2025 Achintya Singh Baghela. All rights reserved.</p>
     <div class="mt-2">
-      <a href="https://linkedin.com/in/yourprofile" class="text-red-500 hover-red mx-2">LinkedIn</a>
-      <a href="https://github.com/yourusername" class="text-red-500 hover-red mx-2">GitHub</a>
-      <a href="https://x.com/yourusername" class="text-red-500 hover-red mx-2">X</a>
+      <a href="https://linkedin.com/in/achintyabaghela" class="text-red-500 hover-red mx-2">LinkedIn</a>
+      <a href="https://github.com/achintya-esbee" class="text-red-500 hover-red mx-2">GitHub</a>
+      <a href="mailto:achintya_singh@outlook.com" class="text-red-500 hover-red mx-2">Email</a>
     </div>
   </footer>
 

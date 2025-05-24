@@ -7,74 +7,80 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background-color: #0a0a0a;
-      color: #e0e0e0;
-      font-family: 'Inter', sans-serif;
+      background-color: #111827;
+      color: #d1d5db;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
-    .neon-text {
-      text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88;
+    .accent-red {
+      color: #ef4444;
     }
-    .hover-neon:hover {
-      box-shadow: 0 0 15px #00ff88;
-      transition: box-shadow 0.3s ease-in-out;
+    .hover-red:hover {
+      color: #f87171;
+      transition: color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="bg-gray-900 p-4 sticky top-0 z-10 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-      <a href="#" class="text-2xl font-bold neon-text">YourName</a>
-      <div class="space-x-4">
-        <a href="#home" class="text-gray-300 hover:text-green-400">Home</a>
-        <a href="#about" class="text-gray-300 hover:text-green-400">About</a>
-        <a href="#blog" class="text-gray-300 hover:text-green-400">Blog</a>
-        <a href="#contact" class="text-gray-300 hover:text-green-400">Contact</a>
+  <nav class="bg-gray-900 py-4 fixed w-full top-0 z-10">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <a href="#home" class="text-2xl font-bold text-white">YourName</a>
+      <div class="space-x-6">
+        <a href="#home" class="text-gray-300 hover-red">Home</a>
+        <a href="#about" class="text-gray-300 hover-red">About</a>
+        <a href="#projects" class="text-gray-300 hover-red">Projects</a>
+        <a href="#contact" class="text-gray-300 hover-red">Contact</a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black">
-    <div class="container mx-auto text-center px-4">
-      <h1 class="text-5xl font-bold neon-text mb-4">Cybersecurity Portfolio</h1>
-      <p class="text-xl text-gray-400 mb-6">Exploring threats, securing systems, and sharing knowledge.</p>
-      <a href="#blog" class="bg-green-500 text-black px-6 py-3 rounded-full font-semibold hover-neon">View My Work</a>
+  <section id="home" class="min-h-screen flex items-center justify-center bg-gray-900">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-5xl font-bold text-white mb-4">Cybersecurity Portfolio</h1>
+      <p class="text-xl text-gray-400 mb-6 max-w-2xl mx-auto">Building secure systems and sharing insights through research and threat detection.</p>
+      <a href="#projects" class="inline-block bg-red-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-700">Explore My Work</a>
+      <a href="resume.pdf" class="inline-block ml-4 bg-gray-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-600">Download Resume</a>
     </div>
   </section>
 
   <!-- About Section -->
   <section id="about" class="py-16 bg-gray-800">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center neon-text mb-8">About Me</h2>
-      <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-        I'm a passionate cybersecurity professional with a CompTIA Security+ certification and experience in security testing web APIs and building Splunk dashboards for threat detection. Currently pursuing Splunk Core Certified Power User certification to enhance my SOC analyst skills. My goal is to secure systems and share actionable insights through research and writeups.
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-white mb-6">About Me</h2>
+      <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+        I'm a cybersecurity enthusiast with a CompTIA Security+ certification and hands-on experience in Splunk dashboards for threat detection. Currently pursuing Splunk Core Certified Power User certification to excel as a SOC analyst. My passion lies in analyzing threats, securing APIs, and sharing knowledge through detailed writeups.
       </p>
     </div>
   </section>
 
-  <!-- Blog Section -->
-  <section id="blog" class="py-16 bg-black">
+  <!-- Projects Section -->
+  <section id="projects" class="py-16 bg-gray-900">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center neon-text mb-8">Security Writeups</h2>
+      <h2 class="text-3xl font-bold text-white text-center mb-8">Projects & Writeups</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Blog Post 1 -->
-        <div class="bg-gray-900 p-6 rounded-lg hover-neon">
-          <h3 class="text-xl font-semibold text-green-400 mb-2">Splunk Dashboard for Firewall Analysis</h3>
-          <p class="text-gray-400 mb-4">A custom Splunk dashboard using the BOTS v1 dataset to analyze FortiGate firewall logs, visualizing traffic, threats, and port scanning activity for SOC analysts.</p>
-          <a href="https://github.com/yourusername/splunk-project" class="text-green-500 hover:underline">Read More</a>
+        <!-- Project 1 -->
+        <div class="bg-gray-800 p-6 rounded-md card-hover">
+          <h3 class="text-xl font-semibold accent-red mb-2">Splunk Dashboard for Firewall Analysis</h3>
+          <p class="text-gray-400 mb-4">Developed a Splunk dashboard using the BOTS v1 dataset to visualize FortiGate firewall logs, identifying traffic patterns and potential threats.</p>
+          <a href="/splunk-dashboard.html" class="text-red-500 hover-red">Read More</a>
         </div>
-        <!-- Blog Post 2 -->
-        <div class="bg-gray-900 p-6 rounded-lg hover-neon">
-          <h3 class="text-xl font-semibold text-green-400 mb-2">Threat Detection with SIEM</h3>
-          <p class="text-gray-400 mb-4">Exploring SIEM tools and techniques for identifying and responding to cyber threats in real-time.</p>
-          <a href="#" class="text-green-500 hover:underline">Read More</a>
+        <!-- Project 2 -->
+        <div class="bg-gray-800 p-6 rounded-md card-hover">
+          <h3 class="text-xl font-semibold accent-red mb-2">API Security Testing</h3>
+          <p class="text-gray-400 mb-4">Explored vulnerabilities in web APIs using manual and automated testing techniques to enhance application security.</p>
+          <a href="/api-security.html" class="text-red-500 hover-red">Read More</a>
         </div>
-        <!-- Blog Post 3 -->
-        <div class="bg-gray-900 p-6 rounded-lg hover-neon">
-          <h3 class="text-xl font-semibold text-green-400 mb-2">API Security Testing Guide</h3>
-          <p class="text-gray-400 mb-4">A practical guide to identifying vulnerabilities in web APIs using manual and automated testing methods.</p>
-          <a href="#" class="text-green-500 hover:underline">Read More</a>
+        <!-- Project 3 -->
+        <div class="bg-gray-800 p-6 rounded-md card-hover">
+          <h3 class="text-xl font-semibold accent-red mb-2">Threat Detection with SIEM</h3>
+          <p class="text-gray-400 mb-4">Leveraged SIEM tools to monitor and respond to cyber threats in real-time, improving incident response workflows.</p>
+          <a href="/siem-threat.html" class="text-red-500 hover-red">Read More</a>
         </div>
       </div>
     </div>
@@ -83,14 +89,14 @@
   <!-- Contact Section -->
   <section id="contact" class="py-16 bg-gray-800">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center neon-text mb-8">Get in Touch</h2>
-      <div class="max-w-lg mx-auto">
-        <p class="text-gray-300 mb-4">Interested in collaborating or discussing cybersecurity? Reach out!</p>
+      <h2 class="text-3xl font-bold text-white text-center mb-8">Get in Touch</h2>
+      <div class="max-w-md mx-auto">
+        <p class="text-gray-300 mb-6 text-center">Interested in discussing cybersecurity or collaboration? Reach out!</p>
         <div class="space-y-4">
-          <input type="text" placeholder="Your Name" class="w-full p-3 bg-gray-900 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-          <input type="email" placeholder="Your Email" class="w-full p-3 bg-gray-900 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-          <textarea placeholder="Your Message" class="w-full p-3 bg-gray-900 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 h-32"></textarea>
-          <button class="bg-green-500 text-black px-6 py-3 rounded-full font-semibold hover-neon w-full">Send Message</button>
+          <input type="text" placeholder="Your Name" class="w-full p-3 bg-gray-700 text-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+          <input type="email" placeholder="Your Email" class="w-full p-3 bg-gray-700 text-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+          <textarea placeholder="Your Message" class="w-full p-3 bg-gray-700 text-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 h-32"></textarea>
+          <button class="w-full bg-red-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-700">Send Message</button>
         </div>
       </div>
     </div>
@@ -98,11 +104,11 @@
 
   <!-- Footer -->
   <footer class="bg-gray-900 py-6 text-center">
-    <p class="text-gray-400">&copy; 2025 YourName. All rights reserved.</p>
+    <p class="text-gray-400">© 2025 YourName. All rights reserved.</p>
     <div class="mt-2">
-      <a href="https://linkedin.com/in/yourprofile" class="text-green-500 hover:underline mx-2">LinkedIn</a>
-      <a href="https://github.com/yourusername" class="text-green-500 hover:underline mx-2">GitHub</a>
-      <a href="https://x.com/yourusername" class="text-green-500 hover:underline mx-2">X</a>
+      <a href="https://linkedin.com/in/yourprofile" class="text-red-500 hover-red mx-2">LinkedIn</a>
+      <a href="https://github.com/yourusername" class="text-red-500 hover-red mx-2">GitHub</a>
+      <a href="https://x.com/yourusername" class="text-red-500 hover-red mx-2">X</a>
     </div>
   </footer>
 

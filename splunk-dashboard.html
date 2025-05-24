@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splunk Dashboard for Firewall Analysis | YourName</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #111827;
+      color: #d1d5db;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    .accent-red {
+      color: #ef4444;
+    }
+    .hover-red:hover {
+      color: #f87171;
+      transition: color 0.3s ease;
+    }
+    .code-block {
+      background-color: #1f2937;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="bg-gray-900 py-4 fixed w-full top-0 z-10">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <a href="/index.html" class="text-2xl font-bold text-white">YourName</a>
+      <div class="space-x-6">
+        <a href="/index.html#home" class="text-gray-300 hover-red">Home</a>
+        <a href="/index.html#about" class="text-gray-300 hover-red">About</a>
+        <a href="/index.html#projects" class="text-gray-300 hover-red">Projects</a>
+        <a href="/index.html#contact" class="text-gray-300 hover-red">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-20">
+    <h1 class="text-4xl font-bold text-white mb-6">Splunk Dashboard for Firewall Analysis</h1>
+    <p class="text-gray-300 mb-4">Published: May 24, 2025</p>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Project Overview</h2>
+    <p class="text-lg text-gray-300 mb-6">
+      This project involves designing a Splunk dashboard to provide a quick and actionable overview of firewall traffic and activities. Leveraging Splunk’s Search Processing Language (SPL), the dashboard analyzes firewall logs to help Security Operations Center (SOC) analysts monitor firewall rules, detect anomalies, and identify potential threats efficiently. This project demonstrates my proficiency with SIEM tools like Splunk, my ability to extract meaningful insights from security data, and my focus on delivering user-friendly visualizations—key skills for a SOC analyst role.
+    </p>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Dataset</h2>
+    <p class="text-lg text-gray-300 mb-6">
+      The dashboard is built using the <strong>Splunk BOTS (Boss Of The SOC) v1</strong> dataset, a popular dataset for security analysis in SOC challenges. It contains a variety of security events, including firewall logs from FortiGate devices (<code>sourcetype=fortigate_traffic</code>), which were the focus of this project for analyzing firewall traffic.
+    </p>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Project Objective</h2>
+    <p class="text-lg text-gray-300 mb-6">
+      The primary objective of this project is to:
+    </p>
+    <ul class="text-gray-300 list-disc pl-6 mb-6">
+      <li>Use SPL to filter and aggregate firewall traffic data from the BOTS v1 dataset.</li>
+      <li>Extract key metrics such as total connections, allowed/blocked connections, geographic distribution of blocked traffic, and port scanning activities.</li>
+      <li>Present these metrics in a visually intuitive dashboard that allows SOC analysts to quickly assess the current posture of firewall rules and activities, supporting rapid threat detection and response.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Dashboard Features</h2>
+    <p class="text-lg text-gray-300 mb-6">
+      The Splunk dashboard provides the following insights at a glance:
+    </p>
+    <ul class="text-gray-300 list-disc pl-6 mb-6">
+      <li><strong>Total Firewall Connections</strong>: Displays the total number of firewall connections (3,703,125 in the sample).</li>
+      <li><strong>Allowed Connections</strong>: Shows the number of connections permitted by the firewall (3,383,831), indicating normal traffic flow.</li>
+      <li><strong>Blocked Connections</strong>: Highlights the number of blocked connections (1,447,941), which may indicate potential threats or misconfigurations.</li>
+      <li><strong>Geographic Distribution of Blocked Connections</strong>: A world map visualizing the locations of blocked connections, with significant activity from regions like China, the United States, and Brazil.</li>
+      <li><strong>Port Scanning Activity</strong>: A detailed table listing source IPs, destination IP/port counts, countries, and actions (allowed/blocked) for potential port scanning activities, helping analysts identify reconnaissance attempts.</li>
+    </ul>
+    <p class="text-lg text-gray-300 mb-6">
+      The dashboard uses color-coded panels (blue for total connections, green for allowed, and red for blocked) to ensure quick interpretation of critical metrics, with a focus on usability for SOC analysts under time pressure.
+    </p>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Technical Implementation</h2>
+    <p class="text-lg text-gray-300 mb-6">
+      The dashboard was created using Splunk’s SPL to query and aggregate the BOTS v1 dataset. Below are the SPL queries used for each panel, along with explanations of their functionality.
+    </p>
+
+    <div class="mb-6">
+      <h3 class="text-xl font-semibold text-white mb-2">1. Total Firewall Connections</h3>
+      <pre class="code-block text-gray-300"><code>
+index=botsv1 sourcetype=fortigate_traffic src_ip=$ip_token$
+| stats count by action
+| stats sum(count)
+      </code></pre>
+      <p class="text-gray-300 mt-2">
+        This query counts all firewall events, grouped by action (allowed or blocked), and sums them to display the total number of connections (3,703,125). The <code>src_ip=$ip_token$</code> allows dynamic IP filtering for interactivity.
+      </p>
+    </div>
+
+    <div class="mb-6">
+      <h3 class="text-xl font-semibold text-white mb-2">2. Allowed Connections</h3>
+      <pre class="code-block text-gray-300"><code>
+index=botsv1 sourcetype=fortigate_traffic src_ip=$ip_token$
+| stats count by action
+| search action=allowed
+| table count
+      </code></pre>
+      <p class="text-gray-300 mt-2">
+        Filters for allowed connections (3,383,831) and displays the count in a single-value panel, colored green to indicate normal traffic.
+      </p>
+    </div>
+
+    <div class="mb-6">
+      <h3 class="text-xl font-semibold text-white mb-2">3. Blocked Connections</h3>
+      <pre class="code-block text-gray-300"><code>
+index=botsv1 sourcetype=fortigate_traffic src_ip=$ip_token$
+| stats count by action
+| search action=blocked
+| table count
+      </code></pre>
+      <p class="text-gray-300 mt-2">
+        Filters for blocked connections (1,447,941) and displays the count in a red-colored panel to highlight potential threats.
+      </p>
+    </div>
+
+    <div class="mb-6">
+      <h3 class="text-xl font-semibold text-white mb-2">4. Geographic Distribution of Blocked Connections</h3>
+      <pre class="code-block text-gray-300"><code>
+index=botsv1 sourcetype=fortigate_traffic action=blocked src_ip=$ip_token$
+| table src_ip
+| iplocation src_ip
+| stats count by Country
+| geom geo_countries featureIdField="Country"
+      </code></pre>
+      <p class="text-gray-300 mt-2">
+        Maps blocked connections to their source countries (e.g., China, United States, Brazil) using Splunk’s <code>geom</code> command, displayed as a choropleth map.
+      </p>
+    </div>
+
+    <div class="mb-6">
+      <h3 class="text-xl font-semibold text-white mb-2">5. Port Scanning Activity</h3>
+      <pre class="code-block text-gray-300"><code>
+index=botsv1 sourcetype="fortigate_traffic" src_ip=$ip_token$
+| stats count(dest_ip) as count_dest_ip count(dest_port) as count_dest_port by action src_ip
+| iplocation src_ip
+| search count_dest_ip>100 AND count_dest_port>100 AND Country!="United States"
+| table src_ip count_dest_ip count_dest_port Country action
+      </code></pre>
+      <p class="text-gray-300 mt-2">
+        Identifies potential port scanning by filtering source IPs with high destination IP/port counts (excluding US IPs), displayed as a table for investigation.
+      </p>
+    </div>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Value for SOC Analysts</h2>
+    <p class="text-lg text-gray-300 mb-6">
+      This dashboard provides significant value to SOC analysts by:
+    </p>
+    <ul class="text-gray-300 list-disc pl-6 mb-6">
+      <li>Offering a quick snapshot of firewall activity, reducing the time needed to identify potential issues.</li>
+      <li>Highlighting blocked connections and their geographic origins, which can indicate malicious activity or the need for rule adjustments.</li>
+      <li>Identifying port scanning activity, a common precursor to cyberattacks, enabling analysts to investigate specific IPs or ports for faster incident response.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Challenges and Learnings</h2>
+    <ul class="text-gray-300 list-disc pl-6 mb-6">
+      <li><strong>Challenge</strong>: Optimizing SPL queries to handle large volumes of firewall logs efficiently.</li>
+      <li><strong>Learning</strong>: Gained expertise in using SPL commands like <code>stats</code>, <code>iplocation</code>, and <code>geom</code>, improving my ability to process and visualize security data.</li>
+      <li><strong>Challenge</strong>: Balancing detailed insights (e.g., port scanning table) with high-level summaries (e.g., total connections) in a single dashboard.</li>
+      <li><strong>Learning</strong>: Developed skills in Splunk dashboard design, focusing on usability and color coding to ensure clarity for analysts under time pressure.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Future Improvements</h2>
+    <ul class="text-gray-300 list-disc pl-6 mb-6">
+      <li><strong>Trend Analysis</strong>: Add a time-series chart to track blocked connections over time (<code>index=botsv1 sourcetype="fortigate_traffic" action=blocked | timechart count</code>).</li>
+      <li><strong>Alert Integration</strong>: Configure Splunk alerts to notify analysts of critical thresholds, such as a sudden increase in blocked connections from a single IP.</li>
+      <li><strong>Interactive Drill-Downs</strong>: Enable drill-downs on the map and table for deeper investigation of raw events.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold accent-red mb-4">Conclusion</h2>
+    <p class="text-lg text-gray-300 mb-6">
+      This Splunk dashboard demonstrates my ability to use SPL for firewall traffic analysis and create actionable visualizations tailored for a SOC environment. By presenting key firewall metrics in a clear and concise manner, the dashboard equips SOC analysts with the insights needed to monitor and respond to potential security threats effectively. This project highlights my technical skills in SIEM tools, data analysis, and security operations, making me a strong candidate for a SOC analyst role.
+    </p>
+    <p class="text-lg text-gray-300 mb-6">
+      View the project code and dataset on <a href="https://github.com/yourusername/splunk-project" class="text-red-500 hover-red">GitHub</a>.
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-6 text-center">
+    <p class="text-gray-400">© 2025 YourName. All rights reserved.</p>
+    <div class="mt-2">
+      <a href="https://linkedin.com/in/yourprofile" class="text-red-500 hover-red mx-2">LinkedIn</a>
+      <a href="https://github.com/yourusername" class="text-red-500 hover-red mx-2">GitHub</a>
+      <a href="https://x.com/yourusername" class="text-red-500 hover-red mx-2">X</a>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for navbar links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

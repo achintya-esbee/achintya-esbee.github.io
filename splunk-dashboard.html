@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Splunk Dashboard for Firewall Analysis | YourName</title>
+  <title>Splunk Dashboard for Firewall Analysis | Achintya Singh Baghela</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -158,7 +158,7 @@ index=botsv1 sourcetype="fortigate_traffic" src_ip=$ip_token$
 | table src_ip count_dest_ip count_dest_port Country action
       </code></pre>
       <p class="text-gray-300 mt-2">
-        Identifies potential port scanning by filtering source IPs with high destination IP/port counts (excluding US IPs), displayed as a table for investigation.
+        Identifies potential port scanning by filtering source IPs (in this case, since the dataset is of a fictional company from the United States, I've excluded it from this search) with high destination IP/port counts (excluding US IPs), displayed as a table for investigation.
       </p>
     </div>
 

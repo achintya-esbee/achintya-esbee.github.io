@@ -16,7 +16,7 @@ timezone: Asia/Calcutta
 
 title: btrchkn # the main title
 
-tagline: Cybersecurity Portfolio # it will display as the subtitle
+tagline: Wait! I left my backdoor open! # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   Achintya Singh Baghela's portfolio website, showcasing my skills and projects in cybersecurity.
@@ -85,7 +85,7 @@ pageviews:
 #     light — Use the light color scheme
 #     dark — Use the dark color scheme
 #
-theme_mode: dark # [light | dark]
+theme_mode: # [light | dark]
 
 # The CDN endpoint for media resources.
 # Notice that once it is assigned, the CDN url

@@ -4,7 +4,6 @@ layout: post
 categories: [projects, write-ups]
 tags: [splunk, SIEM, SPL, data-visualization]
 date: 2025-05-24 00:00:00 +0530
-description: This project involves designing a Splunk dashboard to provide a quick and actionable overview of firewall traffic and activities.
 ---
 
 ## Project Overview

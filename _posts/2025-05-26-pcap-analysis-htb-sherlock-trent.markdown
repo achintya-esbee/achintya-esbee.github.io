@@ -4,7 +4,6 @@ layout: post
 categories: [projects, write-ups]
 tags: [wireshark, threat-detection, hack-the-box, network-forensics]
 date: 2025-05-26 00:00:00 +0530
-description: This writeup is a walkthrough of the “Trent” Sherlock from Hack The Box, an investigative challenge testing defensive security skills. Using Wireshark, I analyzed a PCAP file to uncover an attacker’s Techniques, Tactics, and Procedures (TTPs) during a lateral movement attack targeting router firmware.
 ---
 
 ## Project Overview ![HTB Banner](/assets/img/pcap-analysis/final%20banner.png){: .w-50 .right}

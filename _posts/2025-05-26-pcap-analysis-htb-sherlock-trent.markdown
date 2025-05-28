@@ -1,7 +1,7 @@
 ---
 title: PCAP Analysis - Hack The Box Sherlock
 layout: post
-categories: [projects, write-ups]
+categories: [Projects, Write-ups]
 tags: [wireshark, threat-detection, hack-the-box, network-forensics]
 date: 2025-05-26 00:00:00 +0530
 ---

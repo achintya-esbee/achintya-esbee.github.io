@@ -1,7 +1,7 @@
 ---
 title: Splunk Dashboard - Firewall Analysis
 layout: post
-categories: [projects, write-ups]
+categories: [Projects, Write-ups]
 tags: [splunk, SIEM, SPL, data-visualization]
 date: 2025-05-24 00:00:00 +0530
 ---

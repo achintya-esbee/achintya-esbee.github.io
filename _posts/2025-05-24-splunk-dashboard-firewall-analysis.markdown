@@ -1,18 +1,18 @@
 ---
-title: Splunk Dashboard for Firewall Analysis
+title: Splunk Dashboard - Firewall Analysis
 layout: post
 categories: [projects, write-ups]
+tags: [splunk, SIEM, SPL, data-visualization]
 date: 2025-05-24 00:00:00 +0530
 description: This project involves designing a Splunk dashboard to provide a quick and actionable overview of firewall traffic and activities.
 ---
 
-# Splunk Dashboard for Firewall Analysis
-
-*Published: May 24, 2025*
-
 ## Project Overview
 
 This project involves designing a Splunk dashboard to provide a quick and actionable overview of firewall traffic and activities. Leveraging Splunk’s Search Processing Language (SPL), the dashboard analyzes firewall logs to help Security Operations Center (SOC) analysts monitor firewall rules, detect anomalies, and identify potential threats efficiently. This project demonstrates my proficiency with SIEM tools like Splunk, my ability to extract meaningful insights from security data, and my focus on delivering user-friendly visualizations—key skills for a SOC analyst role.
+
+![Splunk Dashboard Screenshot](/assets/img/splunk-dashboard/splunkdash-screenshot.png)
+_Firewall Traffic Analysis Dashboard_
 
 ## Dataset
 
@@ -44,7 +44,7 @@ The dashboard was created using Splunk’s SPL to query and aggregate the BOTS v
 
 ### 1. Total Firewall Connections
 
-```spl
+```text
 index=botsv1 sourcetype=fortigate_traffic src_ip=$ip_token$
 | stats count by action
 | stats sum(count)
@@ -54,7 +54,7 @@ This query counts all firewall events, grouped by action (allowed or blocked), a
 
 ### 2. Allowed Connections
 
-```spl
+```text
 index=botsv1 sourcetype=fortigate_traffic src_ip=$ip_token$
 | stats count by action
 | search action=allowed
@@ -65,7 +65,7 @@ Filters for allowed connections (3,383,831) and displays the count in a single-v
 
 ### 3. Blocked Connections
 
-```spl
+```text
 index=botsv1 sourcetype=fortigate_traffic src_ip=$ip_token$
 | stats count by action
 | search action=blocked
@@ -76,7 +76,7 @@ Filters for blocked connections (1,447,941) and displays the count in a red-colo
 
 ### 4. Geographic Distribution of Blocked Connections
 
-```spl
+```text
 index=botsv1 sourcetype=fortigate_traffic action=blocked src_ip=$ip_token$
 | table src_ip
 | iplocation src_ip
@@ -88,7 +88,7 @@ Maps blocked connections to their source countries (e.g., China, United States, 
 
 ### 5. Port Scanning Activity
 
-```spl
+```text
 index=botsv1 sourcetype="fortigate_traffic" src_ip=$ip_token$
 | stats count(dest_ip) as count_dest_ip count(dest_port) as count_dest_port by action src_ip
 | iplocation src_ip

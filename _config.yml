@@ -221,10 +221,3 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
-
-jekyll_compose:
-  default_front_matter:
-    posts:
-      category: "Projects"
-      published: false
-      sitemap: false

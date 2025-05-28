@@ -1,0 +1,9 @@
+.dynamic-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cv-download-btn {
+  margin-left: auto;
+}

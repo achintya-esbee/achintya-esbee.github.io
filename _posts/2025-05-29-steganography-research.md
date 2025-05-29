@@ -1,6 +1,6 @@
 ---
 title: "Steganography Using 8-bit LSB Technology: Hiding Data in Plain Sight"
-date: 2022-11-16 10:30:00 +0530
+date: 2025-05-29 10:30:00 +0530
 categories: [Projects, Research]
 tags: [steganography, image-processing, research-paper]
 ---
@@ -134,4 +134,4 @@ The field continues to evolve with advances in machine learning and computer vis
 
 ---
 
-*This research was conducted as part of my final year project at Symbiosis Institute of Technology. The full research paper and implementation details are available for academic and educational purposes.*
+*This research was conducted as part of my final year project at Symbiosis Institute of Technology (Nov, 2022). The full research paper and implementation details are available for academic and educational purposes.*

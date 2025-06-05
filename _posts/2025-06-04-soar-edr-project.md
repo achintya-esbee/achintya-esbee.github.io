@@ -6,7 +6,7 @@ tags: [soar, edr, incident-response, endpoint-detection, automation]
 ---
 
 ## Introduction
-I recently took on a project that felt like piecing together a cybersecurity puzzle, combining **LimaCharlie**, an Endpoint Detection and Response (EDR) platform, with **Tines**, a Security Orchestration, Automation, and Response (SOAR) tool. My goal was to build a system that could spot malicious activity—like the LaZagne credential-dumping tool—send alerts through Slack and email, and let users decide whether to isolate a compromised machine. This guide, crafted for my Chirpy portfolio website, walks you through how I made it happen, with a conversational tone and detailed steps to bring the process to life.
+I recently took on a project that felt like piecing together a cybersecurity puzzle, combining **LimaCharlie**, an Endpoint Detection and Response (EDR) platform, with **Tines**, a Security Orchestration, Automation, and Response (SOAR) tool. My goal was to build a system that could spot malicious activity—like the LaZagne credential-dumping tool—send alerts through Slack and email, and let users decide whether to isolate a compromised machine. This guide walks you through how I made it happen.
 
 ## Project Overview ![workflow diagram](/assets/img/soar-edr-project/EDR-SOAR%20playbook%20workflow%20light.png){: .w-50 .right}
 The idea was to create a workflow that detects threats, notifies the right people, and takes action fast. Using LimaCharlie to monitor endpoints and Tines to automate responses, I built a system that catches LaZagne, sends detailed alerts, and prompts users to isolate affected machines. It’s about making cybersecurity smoother and more responsive, without the manual grind.

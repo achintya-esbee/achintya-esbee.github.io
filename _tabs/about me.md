@@ -57,5 +57,5 @@ Beyond cybersecurity, I’m a tech enthusiast who enjoys diving into the latest 
 
 ---
 
-_"Wait! I left my backdoor open!"_\
-Well, at least the bugs don't really needed to pick the lock 🪲
+_"Wait! I left a backdoor open!"_\
+Well, the bugs don't really need to pick the lock 🪲

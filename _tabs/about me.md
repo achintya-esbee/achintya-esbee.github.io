@@ -25,7 +25,8 @@ show_cv_button: true
 |      Nmap      |                               |                       |
 |   Metasploit   |                               |                       |
 |     Nessus     |                               |                       |
-|     Snort      |                               |                       |
+|   LimaCharlie  |                               |                       |
+|     Tines      |                               |                       |
 
 ---
 
